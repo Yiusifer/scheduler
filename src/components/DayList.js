@@ -3,19 +3,20 @@ import DayListItem from "./DayListItem";
 
 const DayList = function(props) {
 
-  const DayListComponents = props.days.map(Day => {
+  const dayListComponents = props.days.map(day => {
     return (
       <DayListItem
-        id = {Day.id}
-        name = {Day.name}
-        spots = {Day.spots}
+        key = {day.id}
+        name = {day.name}
+        spots = {day.spots}
+        setDay = {props.setDay}
         />
     )
   })
 
 
   return (
-    <ul> {DayListComponents} </ul>
+    <ul> {dayListComponents} </ul>
   )
 }
 
