@@ -10,6 +10,8 @@ const DayList = function(props) {
         name = {day.name}
         spots = {day.spots}
         setDay = {props.setDay}
+        day = {props.day}
+        days = {props.days}
         />
     )
   })
