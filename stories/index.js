@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
@@ -128,13 +128,13 @@ storiesOf("InterviewerList", module)
   .add("Selected", () => (
     <InterviewerList
       interviewers={interviewers}
-      interviewer={3}
+      value={3}
     />
   ))
   .add("Clickable", () => (
     <InterviewerList
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      onChange={action("setInterviewer")}
     />
   ));
 
@@ -142,13 +142,29 @@ storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
-  .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Appointment", () => <Appointments />)
+  .add("Appointment with Time", () => <Appointments time="12pm" />)
   .add("Header", () => <Header time = "12pm"/>)
   .add("Empty", () => <Empty onAdd = {action("onAdd")}/>)
   .add("Show", () => <Show onEdit = {action("onEdit")} onDelete = {action("onDelete")}/>)
   .add("Confirm", () => <Confirm onCancel = {action("onCancel")} onConfirm = {action("onConfirm")} />)
   .add("Status", () => <Status message = "Deleting"/>)
   .add("Error", () => <Error message = "Could not delete appointment" onClose = {action("onClose")}/>)
-  .add("Create", () => <Form />)
-  .add("Edit", () => <Form student = "Adam" interviewer = {2} />)
+  .add("Create", () => <Form interviewers = {interviewers}/>)
+  .add("Edit", () => <Form student = "Adam" interviewer = {2} interviewers = {interviewers} onCancel = {action("onCancel")}/>)
+  .add("Appointment Empty", () => (
+    <Fragment>
+      <Appointments id={1} time="4pm" />
+      <Appointments time="5pm" />
+    </Fragment>
+  ))
+  .add("Appointment Booked", () => (
+    <Fragment>
+      <Appointments
+        id={1}
+        time="4pm"
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
+      />
+      <Appointments time="5pm" />
+    </Fragment>
+  ))
