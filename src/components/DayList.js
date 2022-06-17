@@ -14,6 +14,7 @@ const DayList = function(props) {
         days = {props.days}
         selected = {day.name === props.value}
         />
+
     )
   })
 

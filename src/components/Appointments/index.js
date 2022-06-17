@@ -4,6 +4,8 @@ import Show from "components/Appointments/Show";
 import Empty from "components/Appointments/Empty";
 import Header from "components/Appointments/Header";
 
+
+
 const Appointments = function(props) {
   console.log(Empty)
   return (
