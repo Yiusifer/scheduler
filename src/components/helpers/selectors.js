@@ -14,3 +14,18 @@ export function getAppointmentsForDay(state, day) {
   )
   return filteredInterviews;
 }
+
+export function getInterview(state, interview) {
+  let parsedInterview = {};
+
+  if (interview !== null) {
+    for (let interviewerId in state.interviewers) {
+      if (interview.interviewer == interviewerId) {
+        parsedInterview['student'] = interview.student;
+        parsedInterview['interviewer'] = state.interviewers[interviewerId];
+        return parsedInterview;
+      }
+    }
+  }
+  return null
+}
