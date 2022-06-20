@@ -15,6 +15,7 @@ export function getAppointmentsForDay(state, day) {
   return filteredInterviews;
 }
 
+
 export function getInterview(state, interview) {
   let parsedInterview = {};
 
