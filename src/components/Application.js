@@ -7,7 +7,7 @@ import "components/Application.scss";
 import DayList from "./DayList";
 import Appointments from "./Appointments";
 import { stat } from "fs";
-import { getAppointmentsForDay } from "./helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay } from "./helpers/selectors";
 
 
 export default function Application(props) {
@@ -58,13 +58,14 @@ export default function Application(props) {
   //     })
   // }, [])
 
-
+  console.log('This is the state:', state)
   const parsedAppointments = dailyAppointments.map(appointment => {
     return (
       <Appointments
         key={appointment.id}
         time={appointment.time}
         interview={appointment.interview}
+        interviewers ={getInterviewersForDay(state, state.day)}
         //{...appointment}
       />
     )
@@ -97,7 +98,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {parsedAppointments}
+        {parsedAppointments }
         <Appointments key="last" time="5pm" />
       </section>
 

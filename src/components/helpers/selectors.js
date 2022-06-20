@@ -30,3 +30,21 @@ export function getInterview(state, interview) {
   }
   return null
 }
+
+
+export function getInterviewersForDay(state, day) {
+  let filteredInterviewers = [];
+  state.days.filter(weekday => {
+    if (weekday.name === day) {
+      for (let interviewerId of weekday.interviewers) {
+        for (let interviewer in state.interviewers) {
+          if (interviewerId == interviewer) {
+            filteredInterviewers.push(state.interviewers[interviewer])
+          }
+        }
+      }
+    }
+  }
+  )
+  return filteredInterviewers;
+}

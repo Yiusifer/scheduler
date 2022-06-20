@@ -30,7 +30,6 @@ export default function useVisualMode(initialMode) {
 
   function back() {
     //Will not go back farther than the initial value
-    console.log(history)
     if (history.length > 1) {
       //Set mode to second last index of history array
       setMode(history[(history.length - 2)]);

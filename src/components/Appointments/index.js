@@ -13,17 +13,17 @@ const Appointments = function (props) {
   const SHOW = "SHOW";
   const CREATE = "CREATE";
 
-  console.log(Empty);
-
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  console.log('These are the interviewers', props.interviewers)
   return (
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd = {() => transition(CREATE)}/>}
       {mode === SHOW && <Show interviewer = {props.interview.interviewer} student = {props.interview.student} />}
-      {mode === CREATE && <Form interviewers = {[]} onCancel = {() => transition(EMPTY)} onConfirm = {() => console.log(`Appointment confirmed`)} />}
+      {mode === CREATE && <Form interviewers = {props.interviewers} onCancel = {() => transition(EMPTY)} onConfirm = {() => console.log(`Appointment confirmed`)} />}
 
     </article>
 
