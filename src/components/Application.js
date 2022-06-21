@@ -48,9 +48,10 @@ export default function Application(props) {
     }).then(() => {
       setState({ ...state, appointments })
 
-    }).catch((error) => {
-      console.log(`Error: ${error}`)
     })
+    // .catch((error) => {
+    //   console.log(`Error: ${error}`)
+    // })
   }
 
   //Spread the interview object within appointments before setting it to null?
@@ -80,9 +81,10 @@ export default function Application(props) {
    return axios.delete(`/api/appointments/${id}`)
     .then(() => {
       setState({ ...state, appointments })
-    }).catch((error) => {
-      console.log(`Error: ${error.response.data}`)
     })
+    // .catch((error) => {
+    //   console.log(`Error: ${error.response.data}`)
+    // })
 
   }
 
@@ -132,7 +134,7 @@ export default function Application(props) {
         interviewers={getInterviewersForDay(state, state.day)}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
-      
+
 
       //{...appointment}
       />
