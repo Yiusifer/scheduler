@@ -70,7 +70,7 @@ const Appointments = function (props) {
                               onCancel = {() => transition(SHOW)}
                               onSave = {save}
                               student = {props.interview.student}
-                              interviewer = {props.interview.interviewer}
+                              interviewer = {props.interview.interviewer.id}
                               />}
 
 
