@@ -6,8 +6,7 @@ import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointments from "./Appointments";
-import { stat } from "fs";
-import { getAppointmentsForDay, getInterviewersForDay } from "./helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "./helpers/selectors";
 
 
 export default function Application(props) {
@@ -27,9 +26,70 @@ export default function Application(props) {
     setState({ ...state, day: day });
   }
 
+
+
+  //Based on the id of the appointment, updates state with interview object
+  function bookInterview(id, interview) {
+    console.log('Id and interview:', id, interview);
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    //Updates database with the saved interview(persistent data)
+    return axios.put(`/api/appointments/${id}`, {
+      interview: interview
+    }).then(() => {
+      setState({ ...state, appointments })
+
+    }).catch((error) => {
+      console.log(`Error: ${error}`)
+    })
+  }
+
+  //Spread the interview object within appointments before setting it to null?
+  function cancelInterview(id) {
+
+    //Spreads the existing interview object in state.appointments at the given id (initially not null)
+    const appointmentInterview = {
+      ...state.appointments[id].interview
+
+    }
+    //Spreads the appointment object at the given id
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+      //Use spread version of interview object instead of setting it directly? => appointmentInterview
+
+
+    }
+    //Spreads all appointments and sets the appointment object at the given id to appointment above
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    console.log('This is the appointment interview:', appointmentInterview)
+
+   return axios.delete(`/api/appointments/${id}`)
+    .then(() => {
+      setState({ ...state, appointments })
+    }).catch((error) => {
+      console.log(`Error: ${error.response.data}`)
+    })
+
+  }
+
+
   const dailyAppointments = getAppointmentsForDay(state, state.day)
 
-  useEffect(() =>{
+  useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),
@@ -41,12 +101,11 @@ export default function Application(props) {
         appointments: all[1].data,
         interviewers: all[2].data
       }))
-      console.log(state.days)
     })
 
   }, [])
 
-
+  //console.log('Interviewers:', JSON.stringify(state.interviewers))
 
 
   // useEffect(() => {
@@ -58,20 +117,28 @@ export default function Application(props) {
   //     })
   // }, [])
 
-  console.log('This is the state:', state)
+  ///console.log('This is the state:', state)
+
   const parsedAppointments = dailyAppointments.map(appointment => {
+
+    const interview = getInterview(state, appointment.interview)
+
     return (
       <Appointments
         key={appointment.id}
+        id={appointment.id}
         time={appointment.time}
-        interview={appointment.interview}
-        interviewers ={getInterviewersForDay(state, state.day)}
-        //{...appointment}
+        interview={interview}
+        interviewers={getInterviewersForDay(state, state.day)}
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
+      
+
+      //{...appointment}
       />
     )
+
   })
-
-
 
   return (
     <main className="layout">
@@ -98,7 +165,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {parsedAppointments }
+        {parsedAppointments}
         <Appointments key="last" time="5pm" />
       </section>
 

@@ -17,19 +17,19 @@ export function getAppointmentsForDay(state, day) {
 
 
 export function getInterview(state, interview) {
-  let parsedInterview = {};
 
-  if (interview !== null) {
-    for (let interviewerId in state.interviewers) {
-      if (interview.interviewer == interviewerId) {
-        parsedInterview['student'] = interview.student;
-        parsedInterview['interviewer'] = state.interviewers[interviewerId];
-        return parsedInterview;
-      }
-    }
+  if (interview === null) {
+    return null;
   }
-  return null
+
+  const interviewer = state.interviewers[interview.interviewer]
+
+
+  return { ...interview, interviewer }
+
+
 }
+
 
 
 export function getInterviewersForDay(state, day) {
@@ -48,3 +48,4 @@ export function getInterviewersForDay(state, day) {
   )
   return filteredInterviewers;
 }
+
