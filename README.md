@@ -1,5 +1,7 @@
 # Interview Scheduler
 
+A React based project to create meetings for students to connect with mentors.
+
 ## Setup
 
 Install dependencies with `npm install`.
