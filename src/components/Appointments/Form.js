@@ -19,7 +19,9 @@ const Form = function (props) {
   //  props.onCancel()
   }
 
+
   function validate() {
+    console.log(`This is the interviewer: ${interviewer}`)
     if (student === "") {
       setError("Student name cannot be blank");
       return;
@@ -44,6 +46,7 @@ const Form = function (props) {
             placeholder="Enter Student Name"
             onChange={(event) => setStudent(event.target.value)}
             data-testid = "student-name-input"
+
           />
         </form>
 
@@ -60,7 +63,7 @@ const Form = function (props) {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={props.onCancel}>Cancel</Button>
-          <Button confirm onClick={() => props.onSave(student, interviewer)}>Save</Button>
+          <Button confirm onClick={() => validate()}>Save</Button>
         </section>
       </section>
     </main>
